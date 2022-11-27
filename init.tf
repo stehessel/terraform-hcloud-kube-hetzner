@@ -264,6 +264,9 @@ resource "null_resource" "kustomization" {
         "sleep 5", # important as the system upgrade controller CRDs sometimes don't get ready right away, especially with Cilium.
         "kubectl -n system-upgrade apply -f /var/post_install/plans.yaml"
       ],
+      [
+        "kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.5.1/standard-install.yaml"
+      ],
       local.has_external_load_balancer ? [] : [
         <<-EOT
       timeout 180 bash <<EOF
